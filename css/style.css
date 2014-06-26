@@ -1,0 +1,548 @@
+@font-face{
+	font-family:'FontAwesome';
+	src:url(../fonts/FontAwesome.ttf), url(../fonts/FontAwesome.eot), url(../fonts/FontAwesome.otf), url(../fonts/FontAwesome.woff);
+}
+
+*
+{
+  padding: 0;
+  margin:0;
+  box-sizing: border-box;
+}
+
+
+html, body
+{  
+  text-align: center;
+  background-color: whitesmoke;
+  font-size: 16px;
+  padding:.5rem;
+  color: #333;
+}
+span{
+    margin-right: .5rem;
+    margin-left: .5rem;
+}
+/*============
+    Footer
+==============*/
+html 
+{ 
+ position: relative;
+ min-height: 100%
+}
+body
+{
+  margin: 0 0 50px;
+}
+footer
+{
+ position: absolute;
+ left: 0;
+ bottom: 0;
+ width: 100%;
+}
+div.sticky-footer{
+    height: 2rem;
+    background-color: midnightblue;
+    color: whitesmoke;
+}
+/*============
+    Titulo
+==============*/
+
+h4 
+{
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  color: rgb(4,57,107);
+}
+
+h4:nth-child(2)
+{
+  padding-top: 0;
+}
+
+h4 span
+{
+  text-transform: capitalize;
+}
+
+/*========================
+    Menu de Navegación
+==========================*/
+
+nav
+{
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border-radius: 0.2rem;
+}
+
+nav, nav li, nav a
+{
+  display: inline-block;
+}
+
+/*========================
+    Form de login
+==========================*/
+img{
+    margin: 0 auto;
+}
+
+.form-signin {
+    max-width: 330px;
+    margin: 0 auto;
+    position:relative;
+}
+
+.form-signin .form-signin-heading{
+  margin-bottom: .5em;
+}
+
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: .8em;
+  margin-bottom: .5em;
+}
+
+.form-signin input{
+  border-radius: .5em;   
+}
+
+.form-signin input:focus{
+  border-color:rgb(61,108,153);
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(4,57,107,.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(4,57,107,.6); 
+}
+
+.btn{
+    margin-right: 1rem ; 
+    margin-top: 1rem;
+    background-color: midnightblue;
+    border-color: rgb(61,108,153);
+}
+
+.btn:hover{
+  background-color: rgb(61,108,153);
+}
+
+
+/*----Estilos de mensaje----*/
+
+.message{
+    max-width: 328px;
+    margin-top: 0.7rem;
+    border-radius: 1em;
+    padding: 0.9rem;
+    background-color: Gold;
+    color: darkslateblue;
+    text-align: center;
+}
+.error{
+    max-width: 400px;
+    margin: 1rem auto;
+    border-radius: 1em;
+    padding: 0.7rem;
+    background-color:FireBrick;
+    color: Whitesmoke;
+    text-align: center;
+}
+
+/*----Enlaces del Menu----*/
+
+nav a, nav a:link, nav a:visited
+{
+  color: whitesmoke;
+  padding: 0.8rem 1rem;
+  text-decoration: none;
+  border-radius: 0.2rem;
+  background-color: #7B3D99;
+  margin-bottom: 0.5rem;
+  -webkit-box-shadow: 0 0.2rem 0 rgb(57,25,64);
+  box-shadow: 0 0.2rem 0 rgb(57,25,64);
+}
+
+nav a:focus,
+nav a:hover
+{  
+  background-color: darkslateblue;
+  -webkit-box-shadow: 0 0.4rem 0 rgb(176, 196, 222);
+  box-shadow: 0 0.4rem 0 rgb(176, 196, 222);
+  color: white;
+  -webkit-transform: translateY(-0.2rem);
+  -ms-transform: translateY(-0.2rem);
+  transform: translateY(-0.2rem);
+}
+
+nav a:active
+{
+  -webkit-box-shadow:
+    0 0rem 0 rgb(50,50,50),
+    0 -0.1rem 0rem rgb(255,255,255),
+    -0.1rem 0 0rem rgb(255,255,255),
+    0 0.2rem 0.3rem rgb(30,30,30) inset,
+    0.2rem 0 0.3rem rgb(30,30,30) inset;
+  box-shadow:
+    0 0rem 0 rgb(50,50,50),
+    0 -0.1rem 0rem rgb(255,255,255),
+    -0.1rem 0 0rem rgb(255,255,255),
+    0 0.2rem 0.3rem rgb(30,30,30) inset,
+    0.2rem 0 0.3rem rgb(30,30,30) inset;
+  -webkit-transform: translateY(0.2rem);
+  -ms-transform: translateY(0.2rem);
+  transform: translateY(0.2rem);
+}
+/*=============
+    tablas
+===============*/
+
+table
+{
+  margin: 1rem auto ;
+  width: 95%;
+  border-collapse:collapse;
+  border: 1px solid lightgray;
+  vertical-align: middle;
+  background-color: white;
+  table-layout:auto;
+  border-radius: 0.3rem;
+  overflow: hidden;
+}
+
+table, tr, td, a, tfoot
+{
+  transition: all ease .3s ;
+}
+
+/*----Filas----*/
+
+tr:nth-child(even)
+{
+  background-color: rgb(235,235,235);
+}
+
+tr:nth-child(odd)
+{
+  background-color: rgb(245,245,245);
+}
+
+tr:focus,
+tr:hover
+{
+  background-color: rgb(200,200,200);
+}
+
+tbody tr:only-child
+{
+    width: 100%;
+}
+
+/*----Celdas titulares TH----*/
+/*th:first-child{
+    width: 5rem;
+}
+th:last-child{
+    width: 7rem;
+}*/
+th
+{
+  padding: .4rem;
+  width: auto;
+  text-align: center;
+  background-color: #7B3D99;
+  color: whitesmoke;
+  overflow: hidden;
+  word-break: break-all;
+}
+
+th:focus,
+th:hover
+{
+  background-color: darkslateblue;
+}
+
+/*----Celdas regulares TD----*/
+
+td
+{
+  padding: .2rem;
+  overflow: hidden;
+  word-break: break-all;
+}
+
+td:focus,
+td:hover
+{
+  font-weight: bold;
+   box-shadow:
+    0.2rem 0 0 #7B3D99 inset,/*Izquierda*/
+    -0.15rem 0 0 #7B3D99 inset /*Derecha*/
+    /*0 -0.05rem 0 gray inset, abajo*/
+    /*0 0.1rem 0 gray inset arriba*/;
+}
+/*----Footer de tablas detalle----*/
+#detalle tfoot tr td:first-child {
+background-color: #7B3D99;
+color: whitesmoke;
+}
+/*----Enlaces en tablas----*/
+
+
+tr a,
+tr a:link,
+tr a:visited
+{
+  display: inline-block;
+  background-color: #7B3D99;
+  padding: 0 0.3rem 0.1rem;
+  text-decoration: none;
+  color: whitesmoke;
+  margin: 0 auto;
+  border-radius: 0.2rem;
+}
+
+tr a::after
+{
+  content:" \f06e ";
+  font-family: 'FontAwesome', sans-serif;
+}
+
+/*----tamaño columnas en tabla pedido----*/
+/*
+#ped th:nth-child(8) {
+    width: 12rem;
+}
+
+#ped th:nth-child(6) {
+    width: 5rem;
+}
+
+/*----tamaño columnas en tabla solicitud de pedido----*/
+/*#sol_ped th:nth-child(2) {
+    width: 10rem;
+}
+#sol_ped th:nth-child(3) {
+    width: 9rem;
+}
+#sol_ped th:nth-child(4) {
+    width: 7rem;
+}
+#sol_ped th:nth-child(5) {
+    width: 8rem;
+}
+#sol_ped th:nth-child(6) {
+    width: 17rem;
+}
+/*----tamaño columnas en tabla detalle de pedido----*/
+/*#detalle th:nth-child(3) {
+width: 18rem;
+}
+#detalle th:nth-child(2) {
+width: 11rem;
+}
+#detalle th:nth-child(4) {
+width: 6rem;
+}
+#detalle th:last-child {
+width: auto;
+}
+#detalle th:first-child {
+width: 7rem;
+}
+#detalle tfoot tr td:first-child
+{
+  padding: .4rem;
+  background-color: #7B3D99;
+  color: whitesmoke;
+}
+/*===================
+      Correciones -ERRORES
+===================*/
+thead:nth-child(2){
+    /* Hay 2 THEAD por tabla */
+    display:none; 
+}
+
+/*----paginacion de las tablas----*/
+#ped_paginate a ,  #sol_ped_paginate a{ 
+    margin-right: 1rem;
+    color: #7B3D99;
+    cursor: pointer;
+}
+#ped_paginate a.paginate_active, 
+#ped_paginate a.paginate_active:link, 
+#ped_paginate a.paginate_active:visited,
+#sol_ped_paginate a.paginate_active, 
+#sol_ped_paginate a.paginate_active:link, 
+#sol_ped_paginate a.paginate_active:visited
+{
+    color: whitesmoke; 
+    background-color: #7B3D99; 
+    padding: .1rem .5rem
+}
+
+/*=====================
+  Listas de liberacion
+=====================*/
+.lista_ped{
+  margin: 1rem auto ;
+  vertical-align: middle;
+  width: 13rem;
+}
+
+.lista_sol{
+      margin: 1rem auto ;
+      vertical-align: middle;
+      width: 14rem;
+    }
+
+.lista_mensaje{
+      margin: 1rem auto ;
+      vertical-align: middle;
+      width: 32rem;
+    }
+
+.lista_mensaje ul{
+     border-radius: .5rem;
+     background-color: gold;
+     list-style-type: none;
+    }
+.lista_mensaje ul li:before{
+    content: "\f00c";
+    font-family: 'FontAwesome', sans-serif;
+    padding-right: .5rem;
+    }
+
+#update li{
+  margin: .5rem;
+}
+
+/*===================
+      RWD TABLA 
+===================*/
+
+@media only screen and (max-width: 1100px) and (min-width: 800px){
+    html, body{ font-size: .9rem;}
+    td{font-size: .8rem;}
+}
+
+@media only screen and (max-width: 800px) {
+    html, body{ font-size: .9rem;}
+    /* td{font-size: .8rem;}*/
+    #detalle tfoot 
+    {
+        display: block;
+        float: right;
+        padding-right: .1rem;
+    }
+
+    #detalle tfoot tr td:first-child
+    {
+       padding-bottom: 2.6rem !important; 
+       padding-top: 2.6rem !important; 
+    }
+}
+
+@media only screen and (max-width: 960px){
+	table::after{ 
+		visibility: hidden; 
+		display: block; 
+		font-size: 0; 
+		content: " "; 
+		clear: both; 
+		height: 0; 
+	}
+	* html table{ 
+		zoom: 1; 
+	}
+	*:first-child+html table{ 
+		zoom: 1; 
+	}
+	table{
+		width: 100%; 
+		border-collapse: collapse; 
+		border-spacing: 0; 
+		display: block; 
+		position: relative;
+        background-color: #7B3D99;
+	} 
+	th,
+	td{ 
+		margin: 0; 
+		vertical-align: top;
+        padding: .4rem;
+	}	
+	th{ 
+		text-align: left; 
+	}
+    tfoot {
+        display: block;
+        float: right;
+        padding-right: .1rem;
+    }
+	thead{ 
+		display: block; 
+		float: left; 
+	}
+    #detalle tfoot tr td:first-child{
+       padding-bottom: 2.7rem;
+       padding-top: 2.7rem;
+    }
+    td#espacio{padding-top: 3.88rem;}
+	tbody{ 
+		display: block; 
+		width: auto; 
+		position: relative; 
+        overflow-y: hidden;
+		overflow-x: auto; 
+		white-space: nowrap; 
+	}
+	thead tr, tfoot tr{ 
+		display: block; 
+	}
+	th{ 
+		display: block; 
+		text-align: right; 
+	}
+	tbody tr{	
+		display: inline-block; 
+		vertical-align: top; 
+	}
+	td{ 
+		display: block; 
+		min-height: 1.25em; 
+		text-align: left;
+        padding: .435rem;
+	}
+/*se acomodan los tamaños*/    
+#ped th:nth-child(8), #ped th:nth-child(6), #sol_ped th:nth-child(2), #sol_ped th:nth-child(3), #sol_ped th:nth-child(5), #sol_ped th:nth-child(4), #sol_ped th:nth-child(6), #detalle th:nth-child(3), #detalle th:nth-child(2), #detalle th:nth-child(4), #detalle th:last-child, #detalle th:first-child {width:100%;}
+   /*ERRORES*/
+  /*  1) Las celdas TH en el thead tienen estilos "inline" hay que borrarlos "HACK"
+  */  th  { width: 100% ;}
+  /*  2) Hay 2 THEAD por tabla "HACK"
+  */  thead:nth-child(2){ display:none; }
+  /*--------*/
+    /*se acomodan los titulos*/
+    h4{font-size: 1.3rem; padding: 0rem; text-transform: uppercase;}
+    h4:nth-child(2){ padding-top: 0; }
+    h4 span{ text-transform: capitalize;}
+    /*se acomodan los botones de navegacion*/
+    nav a, nav a:link, nav a:visited{ padding: 0.6rem .8rem;  margin-bottom: 0.8rem;}
+    .lista_mensaje{ width: 18rem; }
+    .lista_sol{  margin: 1rem auto ; vertical-align: middle;  width: 12rem;  }
+ 	/* sort out borders */
+	th { border-bottom: 0; border-left: 0; }
+	td { border-left: 0; border-right: 0; border-bottom: 0; }
+	tbody tr { border-left: 1px solid #babcbf; }
+    th:first-child{ width: auto;}
+    th:last-child{ width: auto;}
+	th:last-child,
+	td:last-child { border-bottom: 1px solid #babcbf; }
+}
