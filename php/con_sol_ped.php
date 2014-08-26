@@ -28,9 +28,14 @@
     # WSDL => error de autenticacion
     # Client => error de parametrizacion a nivel de programcion (si le falta algo al constructor de SoapClient )
     # HTTP => error de conexion con el servidor
-
-    echo 'Detalle: '.$exception->getMessage().'<br/>Codigo: '.$exception->faultcode;
-    die();
+    if($exception->faultcode == "soap-env:Server"){
+        $jsonerr = "{\"DATA\":[{\"PREQ_NO\":\"No es posible determinar ningun grupo de liberacion\",\"DOC_TYPE\":\"soap-env:Server\",\"DOC_CAT\":\" \",\"PROC_STAT\":\" \",\"CREATE_IND\":\" \",\"REL_IND\":\" \",\"REL_STRAT\":\" \",\"PUR_GROUP\":\" \",\"PUR_NAME\":\" \",\"GENERAL_RELEASE\":\" \",\"CREATED_BY\":\" \",\"CH_ON\":\" \",\"PREQ_NAME\":\" \",\"PLANT\":\" \",\"NAME_WERKS\":\" \",\"STORE_LOC\":\" \",\"LGOBE\":\" \",\"PREQ_DATE\":\" \",\"DELIV_DATE\":\" \",\"SUBJ_TO_R\":\" \",\"CURRENCY\":\" \",\"RLWRT\":0}]}";
+	echo $jsonerr.'&&'.$jsonerr;
+    }else{
+        echo 'Detalle: '.$exception->getMessage().'<br/>Codigo: '.$exception->faultcode;
+        die();
+    }
     }  
   }
 ?>
+

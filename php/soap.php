@@ -30,11 +30,11 @@
     $result = $client->ZValUserMov();
     if(strcasecmp($result->User, $user) == 0){
 	unset($client);    
-        echo 'login';
+        echo true;
      }else{
 	  echo "Error de autenticacion verifique sus datos ".var_dump($result);
           die();
-	}       
+	}
     }
     catch (SoapFault $exception)
     {
@@ -42,9 +42,10 @@
         # WSDL => error de autenticacion o de conexion
         # Client => error de parametrizacion a nivel de programcion (si le falta algo al constructor de SoapClient )
         # HTTP => error de conexion con el servidor
+		# Unauthorized => error de contraseña
         
        if($exception->faultcode == "WSDL" ){
-             echo "Error de conexion, vuelva a intentar mas tarde<br/>Codigo: ".$exception->faultcode;
+             echo "Error de conexion, Verifique sus datos y intente nuevamente<br/>Codigo: ".$exception->faultcode;
              die();
         }else{
           if($exception->faultcode == "HTTP" && $exception->getMessage() == "Unauthorized"){

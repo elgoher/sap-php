@@ -54,7 +54,7 @@ function make_table(tabla){
                 "sProcessing":     "Procesando...",
                 "sLengthMenu":     "Mostrar _MENU_ registros",
                 "sZeroRecords":    "No se encontraron resultados",
-                "sEmptyTable":     "Ningun dato disponible en esta tabla",
+                "sEmptyTable":     "No se encontraron disponibles para liberar o rechazar",
                 "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
                 "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
                 "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
@@ -127,11 +127,9 @@ function iniciarSesion(event) {
             beforeSend: function () {
                 showMessage('L', '#update', "<img src=\"img/ajax-loader.gif\" alt=\"Verificando con el servidor\">", true, "message");
             },                     
-            success: function (mensaje) {
-		      console.log(mensaje);                
-                if (mensaje === 'login') {                    
-                    //showMessage('E', '#update', mensaje, true);
-                    location.href='./php/main.php';                    
+            success: function (mensaje) {            
+                if (mensaje == 1) {                   
+                    location.href="php/main.php";                    
                 } else {                    
                     showMessage('E', '#update', mensaje, true, "message");
                 }
@@ -179,9 +177,9 @@ function val_sesion(event){
         cache: false,
         success: function (mensaje){
          if(mensaje === '0'){
-            event.stopImmediatePropagation();
+            //event.stopImmediatePropagation();
             val_flag();
-             if(document.title === 'detallle'){
+             if(document.title == 'detallle'){
                 window.opener.close();
                 alert('Su sesion ha expirado, sera redirigido a la pagina de iniciar sesion');
                 location.href = '../index.html';
@@ -609,7 +607,22 @@ function chk_a(tabla){
     } 
 }
 /*
-    21. con_ped_cab
+    21. addCommas
+    funcion para dar formatos a valores de moneda
+*/
+function addCommas(nStr){
+	nStr += '';
+	x = nStr.split('.');
+	x1 = x[0];
+	x2 = x.length > 1 ? '.' + x[1] : '';
+	var rgx = /(\d+)(\d{3})/;
+	while (rgx.test(x1)) {
+		x1 = x1.replace(rgx, '$1' + '.' + '$2');
+	}
+	return x1 + x2;
+}
+/*
+    22. con_ped_cab
     funcion que consulta los pedidos y los muestra en la tabla
 */
 function con_ped_cab(event){
@@ -638,8 +651,17 @@ function con_ped_cab(event){
             tabla = $('#ped');         
             linea = '<thead><tr><th><input type=\'checkbox\' id="all_ped" onclick=\"sel_todo(\'#ped\', \'#all_ped\', event);\">  Lib.</th><th>Pedido</th><th>Respons.</th><th>Fecha</th><th>Valor</th><th>Moneda</th><th>Grp Compra</th><th>Proveedor</th><th>Detalle</th></tr><thead>'; 
             tabla.append(linea);
-            $.each(arrayValores, function(index, data){                
-                linea = $('<tr></tr>');                
+            $.each(arrayValores, function(index, data){ 
+                if(data["CO_CODE"] == "soap-env:Server"){
+					$.fn.dataTableExt.sErrMode = 'throw';// HACK = frena el alert que muestra el data table 
+					var mensaje = data['PO_NUMBER'];
+					linea = $('<tr></tr>');               
+					linea.append( $('<td></td>').html(mensaje.substring(0, 25)));//cuando el usuario no tiene grupo de liberacion              
+					linea.append( $('<td></td>').html(mensaje.substring(25)));
+					tabla.append(linea);
+					$("#all_ped").attr('disabled', true);
+                }else{
+                linea = $('<tr></tr>');             
                 linea.append( $('<td></td>')
                       .html('<input type=\'checkbox\' value=\''+data['PO_NUMBER']+'\' id=\''+data['PO_NUMBER']+'\' onclick=\"agrupar(\'ped\',\''+data['PO_NUMBER']+'\');\">') // checkbox para escojer el pedido
                              );                
@@ -653,10 +675,10 @@ function con_ped_cab(event){
                       .html(data['DOC_DATE'] ) // fecha pedido
                              );
                  linea.append( $('<td></td>')
-                      .html(data['VALOR_TOTAL'] ) // el valor total de pedido
+                      .html(addCommas(data['VALOR_TOTAL'] )) // el valor total de pedido
                              );
                  linea.append( $('<td></td>')
-                      .html(data['CURRENCY'] ) // moneda
+                      .html(data['CURRENCY'] ) //tipo moneda
                              );
                  linea.append( $('<td></td>')
                       .html(data['PUR_NAME'].charAt(0).toUpperCase()+data['PUR_NAME'].substring(1).toLowerCase()) // grupo de compra
@@ -668,7 +690,8 @@ function con_ped_cab(event){
                       .html( '<a href=\"#\" onclick=\"verDetalle(\''+data['PO_NUMBER']+'\', \'ped\');\">ver</>' ) //ver datalle
                              );
                 tabla.append(linea);
-            }); //fin each
+            }//fin else
+            });//fin each
             flag = true; //se lleno la data table
             make_table('#ped');
             removeStyle(tabla);
@@ -688,8 +711,11 @@ function con_ped_cab(event){
             $('#ped_wrapper').toggle(true);
             document.getElementById("all_ped").checked = false;
             }catch(err){
-                console.log(data);
+		if(err.message == "Cannot read property 'parentNode' of null" || err.message == "DataTables warning (table id = 'ped'): Requested unknown parameter '2' from the data source for row 0"){
+		}else{
+                console.log(data);		
                 showMessage('E', '#update', 'Opps se ha producido un error en el servidor intente mas tarde. '+err.message, true, "error");
+		}
             }
         },//fin success
         error: function (xhr, status, error) {
@@ -699,7 +725,7 @@ function con_ped_cab(event){
 }//fin funcion
 
 /*
-    22. con_ped_cab
+    23. con_ped_cab
     funcion que consulta las sol_ped y los muestra en la tabla
 */
 function con_sol_ped(event){ 
@@ -729,6 +755,15 @@ var tabla,json,linea,arrayValores,paginas,paginadores;
             linea = '<thead><tr><th><input type=\'checkbox\' id="all_sol_ped" onclick=\"sel_todo(\'#sol_ped\', \'#all_sol_ped\', event);\">  Lib.</th><th>Sol. Pedido</th><th>Respons.</th><th>Fecha</th><th>Valor</th><th>Moneda</th><th>Detalle</th><thead>';      
             tabla.append(linea);
             $.each(arrayValores, function(index, data){
+                if(data["DOC_TYPE"] == "soap-env:Server"){
+					$.fn.dataTableExt.sErrMode = 'throw';// HACK = frena el alert que muestra el data table 
+		            var mensaje = data['PREQ_NO'];
+                    linea = $('<tr></tr>');
+                    linea.append( $('<td></td>').html(mensaje.substring(0, 25)));//cuando el usuario no tiene grupo de liberacion primera parte
+                	linea.append( $('<td></td>').html(mensaje.substring(25)));//cuando el usuario no tiene grupo de liberacion segunda parte
+					tabla.append(linea);
+					$("#all_sol_ped").attr('disabled', true);
+                }else{
                 linea = $('<tr></tr>');
                 linea.append( $('<td></td>')
                       .html('<input type=\'checkbox\' value=\''+data['PREQ_NO']+'\' id=\''+index+'\' onclick=\"agrupar(\'sol_ped\', \''+index+'\');\">') /* checkbox para escojer la solicitud de pedido*/                             );
@@ -738,13 +773,14 @@ var tabla,json,linea,arrayValores,paginas,paginadores;
                              );
                 linea.append( $('<td></td>').html(data['PREQ_DATE'] ) // FECHA SOL PED
                              );
-                linea.append( $('<td></td>').html(data['RLWRT'] ) // valor total sol ped
+                linea.append( $('<td></td>').html(addCommas(data['RLWRT']) ) // valor total sol ped
                              );
-                linea.append( $('<td></td>').html(data['CURRENCY'] ) // valor total sol ped
+                linea.append( $('<td></td>').html(data['CURRENCY'] ) // tipo de moneda
                              );
-                linea.append( $('<td></td>').html( '<a href=\"#\" onclick=\"verDetalle(\''+data['PREQ_NO']+'\', \'sol_ped\');\">ver</>' ) //ver datalle
+                linea.append( $('<td></td>').html('<a href=\"#\" onclick=\"verDetalle(\''+data['PREQ_NO']+'\', \'sol_ped\');\">ver</>') //ver datalle
                              );
                 tabla.append(linea);
+                }//fin else
             }); //fin each
             flag = true; //se lleno la data table
             make_table('#sol_ped');//se construye la data table
@@ -765,8 +801,11 @@ var tabla,json,linea,arrayValores,paginas,paginadores;
             $('#sol_ped_wrapper').toggle(true);
             document.getElementById("all_sol_ped").checked = false;
             }catch(err){
+if(err.message == "Cannot read property 'parentNode' of null" || err.message == "DataTables warning (table id = 'sol_ped'): Requested unknown parameter '2' from the data source for row 0"){
+		}else{
                 console.log(data);
                 showMessage('E', '#update', 'Opps se ha producido un error en el servidor intente mas tarde. '+err.autoprefixer+' '+err.message, true, "error");
+		}
             }
         },//fin success
         error: function (xhr, status, error) {

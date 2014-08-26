@@ -1,9 +1,11 @@
 var json, tabla, detalle, linea, total_menge=0, total_brtwr=0, total_netwr=0;
+
 /*
     1. load
     funcion que carga los datos de sol ped/ped selecionado para ver el detalle 
 */
 function load(){
+        val_sesion(this);
         json = window.opener.detalle;
         tabla = $('#detalle');
         try{
@@ -33,22 +35,22 @@ function load(){
                     $('<td></td>').html(data['TXZ01'])//texto breve
                     );
                 linea.append(
-                    $('<td></td>').html(data['MENGE'])//cantidad
+                    $('<td></td>').html(addCommas(data['MENGE']))//cantidad
                     );
                   total_menge = total_menge + data['MENGE'];//sumatoria cantidad
                 linea.append(
-                    $('<td></td>').html(data['BRTWR'])//valor bruto
+                    $('<td></td>').html(addCommas(data['BRTWR']))//valor bruto
                     );
                   total_brtwr = total_brtwr + data['BRTWR'];//sumatoria valor bruto
                 linea.append(
-                    $('<td></td>').html(data['NETWR'])//valor neto
+                    $('<td></td>').html(addCommas(data['NETWR']))//valor neto
                     );
                   total_netwr = total_netwr + data['NETWR'];//sumatoria valor neto
                 tabla.append(linea);
         });
-        tabla.children('tfoot').children('tr').children('td').children('b#C').html(total_menge);//sumatoria cantidad
-        tabla.children('tfoot').children('tr').children('td').children('b#VB').html(total_brtwr);//sumatoria valor bruto
-        tabla.children('tfoot').children('tr').children('td').children('b#VN').html(total_netwr);//sumatoria valor neto
+        tabla.children('tfoot').children('tr').children('td').children('b#C').html(addCommas(total_menge));//sumatoria cantidad
+        tabla.children('tfoot').children('tr').children('td').children('b#VB').html(addCommas(total_brtwr));//sumatoria valor bruto
+        tabla.children('tfoot').children('tr').children('td').children('b#VN').html(addCommas(total_netwr));//sumatoria valor neto
         $('#update').html('<button class=\"btn btn-primary\" onclick=\"Liberar_single(\'ped\');\">Liberar</button>');
         $('#update').append('<button class=\"btn btn-primary\" onclick=\"Rechazar_single(\'ped\');\">Rechazar</button>');
         $('#update').append('<button class=\"btn btn-primary\" onclick=\"javascript:window.close();\">Volver</button>');
@@ -79,11 +81,11 @@ function load(){
                     $('<td></td>').html(data['SHORT_TEXT'])//texto breve
                     );
                 linea.append(
-                    $('<td></td>').html(data['QUANTITY'])//cantidad
+                    $('<td></td>').html(addCommas(data['QUANTITY']))//cantidad
                     );
                   total_menge = total_menge + data['QUANTITY'];//sumatoria cantidad
                 linea.append(
-                    $('<td></td>').html(data['C_AMT_BAPI'])//valor
+                    $('<td></td>').html(addCommas(data['C_AMT_BAPI']))//valor
                     );
                   total_brtwr = total_brtwr + data['C_AMT_BAPI'];//sumatoria valor
                 linea.append(
@@ -94,8 +96,8 @@ function load(){
                     );
                 tabla.append(linea);
         });
-        tabla.children('tfoot').children('tr').children('td').children('b#C').html(total_menge);
-        tabla.children('tfoot').children('tr').children('td').children('b#VT').html(total_brtwr);
+        tabla.children('tfoot').children('tr').children('td').children('b#C').html(addCommas(total_menge));
+        tabla.children('tfoot').children('tr').children('td').children('b#VT').html(addCommas(total_brtwr));
         $('#update').html('<button class=\"btn btn-primary\" onclick=\"Liberar_single(\'sol_ped\');\">Liberar</button>');
         $('#update').append('<button class=\"btn btn-primary\" onclick=\"Rechazar_single(\'sol_ped\');\">Rechazar</button>');
         $('#update').append('<button class=\"btn btn-primary\" onclick=\"javascript:window.close();\">Volver</button>');
@@ -113,8 +115,9 @@ function load(){
     funcion para rechazar la sol ped/ped selecionado en el detalle
 */
 function Rechazar_single(type){
-     var tipo_lib, json_lib = {DATA :[]};
+    var tipo_lib, json_lib = {DATA :[]};
     var text = 'Esta seguro que desea rechazar el registro: '+detalle[1]+'? Revise su seleccion antes rechazar';
+    val_sesion(this);
     if(confirm(text)){
          if(type === 'ped'){
             tipo_lib = 4;
@@ -175,6 +178,7 @@ function Rechazar_single(type){
 function Liberar_single(type){
     var tipo_lib, json_lib = {DATA :[]};
     var text = 'Esta seguro que desea liberar el registro: '+detalle[1]+'? Revise su seleccion antes liberar';
+    val_sesion(this);
     if(confirm(text)){
         if(type === 'ped'){
             tipo_lib = 2;
@@ -248,3 +252,4 @@ if(type === 'ped'){
 }
 
 $(document).ready(function(){ load(); });
+
