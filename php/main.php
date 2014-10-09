@@ -12,7 +12,7 @@
         <link rel="icon" type="image/ico" href="../img/favicon.ico"/>
         <link rel="stylesheet" href="../css/bootstrap.min.css">
         <link rel="stylesheet" href="../css/style.css">
-	<script src="../js/modernizr.js"></script>
+	      <script src="../js/modernizr.js"></script>
         <script src="../js/prefixfree.min.js"></script>
         <script src="../js/jquery-1.9.1.js"></script>
         <script src="../js/jquery.dataTables.js"></script>
